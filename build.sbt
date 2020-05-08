@@ -112,7 +112,7 @@ lazy val scalaImpl: sbt.Project =
       ideExcludedDirectories := Seq(baseDirectory.value / "testdata" / "projects"),
       //scalacOptions in Global += "-Xmacro-settings:analyze-caches",
       libraryDependencies ++= DependencyGroups.scalaCommunity,
-      addCompilerPlugin(Dependencies.macroParadise),
+//      addCompilerPlugin(Dependencies.macroParadise),
       intellijPlugins := Seq(
         "org.intellij.intelliLang",
         "com.intellij.java-i18n",
@@ -216,7 +216,7 @@ lazy val decompiler =
 lazy val macroAnnotations =
   newProject("macros", file("scala/macros"))
     .settings(
-      addCompilerPlugin(Dependencies.macroParadise),
+//      addCompilerPlugin(Dependencies.macroParadise),
       libraryDependencies ++= Seq(Dependencies.scalaReflect, Dependencies.scalaCompiler),
       packageMethod        := PackagingMethod.Skip()
     )
@@ -274,7 +274,7 @@ lazy val intelliLangIntegration = newProject(
 ).dependsOn(
   scalaImpl % "test->test;compile->compile"
 ).settings(
-  addCompilerPlugin(Dependencies.macroParadise),
+//  addCompilerPlugin(Dependencies.macroParadise),
   intellijPlugins += "org.intellij.intelliLang".toPlugin
 )
 

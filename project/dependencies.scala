@@ -32,10 +32,10 @@ object Versions {
     val latest_2_12 = "2.12.10"
     val latest_2_13 = "2.13.1"
     val latest_3_0 = "0.24.0-RC1"
-    val latest_dotty = latest_3_0
-    val latest: String = latest_2_12
-    /** Version used to build this project. Prefer latest_2_12 unless it causes problems. */
-    val project = "2.12.7"
+    val latest_dotty: String = latest_3_0
+    val latest: String = latest_2_13
+    /** Version used to build this project. Prefer latest unless it causes problems. */
+    val project: String = latest
 
     def binaryVersion(v: String): String =
       if (v.startsWith("2.9")) binary_2_9
@@ -100,7 +100,7 @@ object Dependencies {
     "com.typesafe" % "config" % "1.2.1",
     "com.lihaoyi" %% "sourcecode" % "0.1.3"
   )
-  val macroParadise: ModuleID = "org.scalameta" % "paradise" % paradiseVersion cross CrossVersion.full
+//  val macroParadise: ModuleID = "org.scalameta" % "paradise" % paradiseVersion cross CrossVersion.full
   val scalaMetaCore: ModuleID = "org.scalameta" %% "scalameta" % scalaMetaVersion withSources() exclude("com.google.protobuf", "protobuf-java")
   val fastparse: ModuleID = "com.lihaoyi" % s"fastparse_$scalaBinaryVersion" % "0.4.3" // transitive dependency of scalaMeta, needs explicit versioning
 
@@ -110,7 +110,7 @@ object Dependencies {
   // when updating the version, do not forget to:
   //  1. update version in the sbt-idea-compiler indices plugin too
   //  2. update version in scala-plugin-common.xml compilerServer.plugin classpath setting
-  val compilerIndicesProtocol: ModuleID = "io.github.sugakandrey" %% "scala-compiler-indices-protocol" % "0.1.1"
+  val compilerIndicesProtocol: ModuleID = "io.github.sugakandrey" %% "scala-compiler-indices-protocol" % "0.1.2"
 
   val nailgun: ModuleID = "org.jetbrains" % "nailgun-patched" % "1.0.1"
   val zinc = "org.scala-sbt" %% "zinc" % zincVersion
@@ -181,7 +181,7 @@ object DependencyGroups {
     "org.scala-lang" % "scala-compiler" % scalaVersion,
     // "provided" danger: we statically depend on a single version, but need to support all the version
     // some part of our code is now statically dependent on lib classes, another part uses reflections for other versions
-    "org.scalatest" %% "scalatest" % "3.0.1" % "provided",
+    "org.scalatest" %% "scalatest" % "3.1.1" % "provided",
     "com.lihaoyi" %% "utest" % "0.7.4" % "provided",
     "org.specs2" %% "specs2-core" % "2.4.17" % "provided" excludeAll ExclusionRule(organization = "org.ow2.asm")
     //  val specs2: ModuleID = "org.specs2" %% "specs2-core" % "3.9.1" % "provided" excludeAll ExclusionRule(organization = "org.ow2.asm")
