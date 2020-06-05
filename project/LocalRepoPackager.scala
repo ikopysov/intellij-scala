@@ -1,7 +1,10 @@
 import java.net.URI
 import java.nio.charset.StandardCharsets
+import java.nio.file.Paths
 
 import sbt._
+
+import scala.util.Try
 
 /**
   * Download artifacts from jetbrains bintray to mimic a simple local ivy repo that sbt can resolve artifacts from.
@@ -12,8 +15,10 @@ object LocalRepoPackager {
     * Create local plugin repo by downloading published files from the jetbrains sbt-plugins bintray repo.
     */
   def localPluginRepo(localRepo: File, paths: Seq[String]): Seq[File] = {
+    val home = System.getProperty("user.home", "~")
+    val localPublishRepo = Paths.get(home + "/.ivy2/local/").toUri
     val jetbrainsRepo = URI.create("https://dl.bintray.com/jetbrains/sbt-plugins/")
-    downloadPathsToLocalRepo(jetbrainsRepo, localRepo, paths)
+    downloadPathsToLocalRepo(List(localPublishRepo,jetbrainsRepo), localRepo, paths)
   }
 
   /**
@@ -29,12 +34,12 @@ object LocalRepoPackager {
     }
 
   /** Download sbt plugin files to a local repo for both sbt 0.13 and 1.0 */
-  private def downloadPathsToLocalRepo(remoteRepo: URI, localRepo: File, paths: Seq[String]): Seq[File] = {
+  private def downloadPathsToLocalRepo(sourceRepos: List[URI], localRepo: File, paths: Seq[String]): Seq[File] = {
 
     val emptyMD5 = "d41d8cd98f00b204e9800998ecf8427e"
 
     val downloadedArtifactFiles = paths.map { path =>
-      val downloadUrl = remoteRepo.resolve(path).normalize().toURL
+      val downloadUrls = sourceRepos.map(_.resolve(path).normalize().toURL)
       val localFile = (localRepo / path).getCanonicalFile
 
       // Place dummy javadoc files for artifacts to avoid resolve errors without packaging large-ish but useless files.
@@ -43,7 +48,9 @@ object LocalRepoPackager {
           IO.write(localFile, Array.empty[Byte])
         } else if (path.endsWith("-javadoc.jar.md5")) {
           IO.write(localFile, emptyMD5.getBytes(StandardCharsets.US_ASCII))
-        } else IO.download(downloadUrl, localFile)
+        } else downloadUrls.find { url =>
+          Try(IO.download(url, localFile)).isSuccess
+        }
       }
 
       localFile

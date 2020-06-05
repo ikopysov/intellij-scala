@@ -8,10 +8,9 @@ object Versions {
   // run runtimeDependencies/update manually
   val sbtVersion: String = Sbt.latest
   val bloopVersion = "1.4.1"
-
   val zincVersion = "1.4.0-M5"
   val intellijVersion = "202.5428.22"
-  val bspVersion = "2.0.0-M11"
+  val bspVersion = "2.0.0-M11+7-32d79926-SNAPSHOT"
   val sbtStructureVersion: String = "2020.2+2-b4bf15a0"
   val sbtIdeaShellVersion: String = "2018.3"
   val sbtIdeaCompilerIndicesVersion = "0.2+12-f21cf3b3-SNAPSHOT"
@@ -103,7 +102,7 @@ object Dependencies {
   )
 //  val macroParadise: ModuleID = "org.scalameta" % "paradise" % paradiseVersion cross CrossVersion.full
   val scalaMetaCore: ModuleID = "org.scalameta" %% "scalameta" % scalaMetaVersion withSources() exclude("com.google.protobuf", "protobuf-java")
-  val fastparse: ModuleID = "com.lihaoyi" % s"fastparse_$scalaBinaryVersion" % "0.4.3" // transitive dependency of scalaMeta, needs explicit versioning
+  val fastparse: ModuleID = "com.lihaoyi" % s"fastparse_$scalaBinaryVersion" % "2.3.0" // transitive dependency of scalaMeta, needs explicit versioning
 
   val bcel: ModuleID = "org.apache.bcel" % "bcel" % "6.0"
 
@@ -116,7 +115,7 @@ object Dependencies {
   val nailgun: ModuleID = "org.jetbrains" % "nailgun-patched" % "1.0.1"
   val zinc = "org.scala-sbt" %% "zinc" % zincVersion
   val zincInterface = "org.scala-sbt" % "compiler-interface" % zincVersion
-  val sbtInterface = "org.scala-sbt" % "util-interface" % "1.1.2"
+  val sbtInterface = "org.scala-sbt" % "util-interface" % "1.3.0"
 
   val compilerBridgeSources_2_10 = "org.scala-sbt" % "compiler-bridge_2.10" % zincVersion classifier "sources"
   val compilerBridgeSources_2_11 = "org.scala-sbt" % "compiler-bridge_2.11" % zincVersion classifier "sources"
