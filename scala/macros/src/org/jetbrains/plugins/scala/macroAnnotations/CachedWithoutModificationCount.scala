@@ -65,7 +65,7 @@ object CachedWithoutModificationCount {
         val computedValue = generateTermName(name.toString, "computedValue")
         val tracerName = generateTermName(name.toString, "$tracer")
 
-        val keyId = stringLiteral(name + "cacheKey")
+        val keyId = stringLiteral(name.toString + "cacheKey")
 
         //DefDef parameters
         val flatParams = paramss.flatten
