@@ -166,7 +166,8 @@ lazy val compilerJps =
       packageMethod           :=  PackagingMethod.Standalone("lib/jps/compiler-jps.jar", static = true),
       libraryDependencies     ++= Dependencies.nailgun :: Dependencies.zincInterface  :: Nil,
       packageLibraryMappings  ++= Dependencies.nailgun       -> Some("lib/jps/nailgun.jar") ::
-                                  Dependencies.zincInterface -> Some("lib/jps/compiler-interface.jar") :: Nil)
+                                  Dependencies.zincInterface -> Some("lib/jps/compiler-interface.jar") :: Nil
+    )
 
 lazy val repackagedZinc =
   newProject("repackagedZinc", file("target/tools/zinc"))
@@ -180,7 +181,7 @@ lazy val repackagedZinc =
 lazy val compilerShared =
   newProject("compiler-shared", file("scala/compiler-shared"))
     .settings(
-      libraryDependencies ++= Seq(Dependencies.nailgun, Dependencies.compilerIndicesProtocol),
+      libraryDependencies ++= Seq(Dependencies.nailgun, Dependencies.compilerIndicesProtocol, Dependencies.zincInterface),
       packageLibraryMappings ++= Seq(
         Dependencies.nailgun                 -> Some("lib/jps/nailgun.jar"),
         Dependencies.compilerIndicesProtocol -> Some("lib/scala-compiler-indices-protocol_2.12-0.1.1.jar")

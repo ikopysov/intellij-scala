@@ -8,7 +8,7 @@ object Versions {
   // run runtimeDependencies/update manually
   val sbtVersion: String = Sbt.latest
   val bloopVersion = "1.4.1"
-  val zincVersion = "1.4.0-M5"
+  val zincVersion = "1.4.0-M1"
   val intellijVersion = "202.5428.22"
   val bspVersion = "2.0.0-M11+7-32d79926-SNAPSHOT"
   val sbtStructureVersion: String = "2020.2+2-b4bf15a0"
@@ -53,7 +53,7 @@ object Versions {
 
     val latest_0_12 = "0.12.4"
     val latest_0_13 = "0.13.18"
-    val latest_1_0 = "1.3.8"
+    val latest_1_0 = "1.3.12"
     val latest: String = latest_1_0
     // ATTENTION: after adding sbt major version, also update:
     // buildInfoKeys, Sbt.scala and SbtUtil.latestCompatibleVersion
