@@ -34,10 +34,10 @@ private[completion] sealed abstract class CompanionObjectMembersFinder[E <: PsiE
 
   protected def findTargets(place: E): Iterable[PsiElement]
 
-  protected def functions(`object`: ScObject): Seq[ScFunction] =
+  protected def functions(`object`: ScObject): collection.Seq[ScFunction] =
     `object`.functions
 
-  protected def members(`object`: ScObject): Seq[ScTypedDefinition] =
+  protected def members(`object`: ScObject): collection.Seq[ScTypedDefinition] =
     `object`.members.flatMap {
       case value: ScValueOrVariable /* todo if isAccessible */ => value.declaredElements
       case _ => Seq.empty
@@ -112,7 +112,7 @@ private[completion] object CompanionObjectMembersFinder {
     override protected def findTargets(place: ScConstructorOwner): Iterable[PsiClass] =
       place +: place.supers
 
-    override protected def functions(`object`: ScObject): Seq[ScFunction] = for {
+    override protected def functions(`object`: ScObject): collection.Seq[ScFunction] = for {
       function <- super.functions(`object`)
 
       parameters = function.parameters

@@ -127,7 +127,7 @@ class ScConstructorInvocationImpl(node: ASTNode)
           val methodType = method.methodTypeProvider(elementScope).methodType(Some(tp))
           subst(methodType)
       }
-      val typeParameters: Seq[TypeParameter] = r.getActualElement match {
+      val typeParameters: collection.Seq[TypeParameter] = r.getActualElement match {
         case tp: ScTypeParametersOwner if tp.typeParameters.nonEmpty =>
           tp.typeParameters.map(TypeParameter(_))
         case ptp: PsiTypeParameterListOwner if ptp.getTypeParameters.nonEmpty =>

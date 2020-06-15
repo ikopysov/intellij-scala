@@ -12,10 +12,9 @@ import org.jetbrains.jps.incremental.scala.local.IdeClientIdea.CompilationResult
 import org.jetbrains.jps.incremental.scala.local.PackageObjectsData.packageObjectClassName
 import org.jetbrains.jps.incremental.{CompileContext, Utils}
 import org.jetbrains.org.objectweb.asm.ClassReader
-import org.jetbrains.plugins.scala.compiler.CompilerEvent
 
-import scala.collection.JavaConverters.iterableAsScalaIterableConverter
-import scala.collection._
+import scala.jdk.CollectionConverters._
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**

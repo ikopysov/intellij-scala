@@ -11,7 +11,6 @@ package typedef
 
 import com.intellij.lang.ASTNode
 import com.intellij.navigation._
-import com.intellij.openapi.project.DumbService
 import com.intellij.psi._
 import com.intellij.psi.impl.source.PsiFileImpl
 import com.intellij.psi.javadoc.PsiDocComment
@@ -19,7 +18,6 @@ import com.intellij.psi.stubs.StubElement
 import com.intellij.psi.util.PsiTreeUtil
 import javax.swing.Icon
 import org.jetbrains.plugins.scala.JavaArrayFactoryUtil.ScTypeDefinitionFactory
-import org.jetbrains.plugins.scala.ScalaBundle
 import org.jetbrains.plugins.scala.caches.{BlockModificationTracker, CachesUtil}
 import org.jetbrains.plugins.scala.extensions._
 import org.jetbrains.plugins.scala.lang.TokenSets.TYPE_DEFINITIONS
@@ -46,7 +44,6 @@ import org.jetbrains.plugins.scala.macroAnnotations.{Cached, CachedInUserData, C
 import org.jetbrains.plugins.scala.projectView.FileKind
 
 import scala.annotation.tailrec
-import scala.collection.Seq
 
 abstract class ScTypeDefinitionImpl[T <: ScTemplateDefinition](stub: ScTemplateDefinitionStub[T],
                                                                nodeType: ScTemplateDefinitionElementType[T],
@@ -386,13 +383,13 @@ abstract class ScTypeDefinitionImpl[T <: ScTemplateDefinition](stub: ScTemplateD
     ScalaPsiImplementationHelper.getOriginalClass(this)
 
   @CachedInUserData(this, ModCount.getBlockModificationCount)
-  override def syntheticTypeDefinitions: Seq[ScTypeDefinition] = SyntheticMembersInjector.injectInners(this)
+  override def syntheticTypeDefinitions: collection.Seq[ScTypeDefinition] = SyntheticMembersInjector.injectInners(this)
 
   @CachedInUserData(this, ModCount.getBlockModificationCount)
-  override def syntheticMembers: Seq[ScMember] = SyntheticMembersInjector.injectMembers(this)
+  override def syntheticMembers: collection.Seq[ScMember] = SyntheticMembersInjector.injectMembers(this)
 
   @CachedInUserData(this, ModCount.getBlockModificationCount)
-  override def syntheticMethods: Seq[ScFunction] = SyntheticMembersInjector.inject(this)
+  override def syntheticMethods: collection.Seq[ScFunction] = SyntheticMembersInjector.inject(this)
 
   @CachedInUserData(this, CachesUtil.libraryAwareModTracker(this))
   override def psiMethods: Array[PsiMethod] = getAllMethods.filter(_.containingClass == this)

@@ -66,7 +66,7 @@ final class ScDocCommentImpl(buffer: CharSequence,
 
   override def findTagsByName(filter: String => Boolean): Array[PsiDocTag] = {
     var currentChild = getFirstChild
-    val answer = mutable.ArrayBuilder.make[PsiDocTag]()
+    val answer = mutable.ArrayBuilder.make[PsiDocTag]
 
     while (currentChild != null && currentChild.getNode.getElementType != ScalaDocTokenType.DOC_COMMENT_END) {
       currentChild match {

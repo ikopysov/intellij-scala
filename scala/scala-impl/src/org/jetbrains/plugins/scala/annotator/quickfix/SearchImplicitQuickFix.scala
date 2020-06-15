@@ -22,9 +22,9 @@ import org.jetbrains.plugins.scala.lang.psi.types.ScType
 import org.jetbrains.plugins.scala.lang.psi.types.TypePresentationContext
 import org.jetbrains.plugins.scala.lang.resolve.ScalaResolveResult
 
-import scala.collection.Seq
+import scala.jdk.CollectionConverters._
 
-private class SearchImplicitQuickFix(typesToSearch: Seq[ScType],
+private class SearchImplicitQuickFix(typesToSearch: collection.Seq[ScType],
                                      place: ImplicitArgumentsOwner,
                                      popupPosition: PopupPosition) extends IntentionAction {
   private val pointer =
@@ -57,7 +57,7 @@ private class SearchImplicitQuickFix(typesToSearch: Seq[ScType],
   }
 
   private def chooseType(editor: Editor): Unit = {
-    val popup = new BaseListPopupStep(ScalaBundle.message("choose.type.to.search"), typesToSearch: _*) {
+    val popup = new BaseListPopupStep[ScType](ScalaBundle.message("choose.type.to.search"), typesToSearch.asJava) {
       override def getIconFor(aValue: ScType): Icon = null
 
       override def getTextFor(value: ScType): String =
@@ -102,7 +102,7 @@ private class SearchImplicitQuickFix(typesToSearch: Seq[ScType],
 }
 
 object SearchImplicitQuickFix {
-  def apply(notFoundImplicitParams: Seq[ScalaResolveResult],
+  def apply(notFoundImplicitParams: collection.Seq[ScalaResolveResult],
             owner: ImplicitArgumentsOwner,
             popupPosition: PopupPosition = PopupPosition.best): Option[IntentionAction] = {
 
@@ -116,7 +116,7 @@ object SearchImplicitQuickFix {
   }
 
   private def withProbableArguments(parameter: ScalaResolveResult,
-                                    visited: Set[PsiNamedElement] = Set.empty): Seq[ScalaResolveResult] = {
+                                    visited: collection.Set[PsiNamedElement] = Set.empty): collection.Seq[ScalaResolveResult] = {
     if (visited(parameter.element))
       return Seq.empty
 

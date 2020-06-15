@@ -10,8 +10,8 @@ import collection.JavaConverters._
 /**
  * @author Pavel Fatin
  */
-private case class LibraryData(name: String, classes: Seq[String], sources: Seq[String], docs: Seq[String]) {
-  def classesAsFileUrls: Seq[String] =
+private case class LibraryData(name: String, classes: collection.Seq[String], sources: collection.Seq[String], docs: collection.Seq[String]) {
+  def classesAsFileUrls: collection.Seq[String] =
     classes.map(url => "file" + url.substring(3, url.length - 2))
 }
 

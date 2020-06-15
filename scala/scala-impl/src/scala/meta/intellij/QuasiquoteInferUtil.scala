@@ -14,6 +14,7 @@ import org.jetbrains.plugins.scala.lang.psi.types.result._
 import org.jetbrains.plugins.scala.lang.resolve.ScalaResolveResult
 import org.jetbrains.plugins.scala.project.ProjectContext
 
+import scala.meta._
 import scala.meta.Dialect
 import scala.meta.inputs.Input
 import scala.meta.parsers.{ParseException, Parsed}
@@ -22,7 +23,7 @@ import scala.meta.parsers.{ParseException, Parsed}
   * @author Mikhail Mutcianko
   * @since 11.09.16
   */
-object QuasiquoteInferUtil extends scala.meta.quasiquotes.QuasiquoteParsers {
+object QuasiquoteInferUtil {
 
   import scala.{meta => m}
 

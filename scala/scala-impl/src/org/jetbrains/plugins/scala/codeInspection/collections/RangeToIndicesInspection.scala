@@ -19,7 +19,7 @@ object RangeToIndices extends SimplificationType {
   private val Range = invocation("apply").from(Array("scala.collection.immutable.Range"))
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case Range(_, literal("0"), qual`.sizeOrLength`()) if isSeq(qual) || isArray(qual) => toIndicesSimplification(expr, qual)
+    case Range(_, literal("0"), qual`.sizeOrLength`Seq()) if isSeq(qual) || isArray(qual) => toIndicesSimplification(expr, qual)
     case _ => None
   }
 
@@ -39,7 +39,7 @@ object UntilToIndices extends SimplificationType {
   private val `.until` = invocation("until").from(Array("scala.runtime.RichInt"))
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case literal("0")`.until`(qual`.sizeOrLength`())  if isSeq(qual) || isArray(qual) =>
+    case literal("0")`.until`(qual`.sizeOrLength` Seq())  if isSeq(qual) || isArray(qual) =>
       RangeToIndices.toIndicesSimplification(expr, qual)
     case _ => None
   }
@@ -53,7 +53,7 @@ object ToToIndices extends SimplificationType {
   private val `.to` = invocation("to").from(Array("scala.runtime.RichInt"))
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case literal("0")`.to`(qual`.sizeOrLength`() `-` literal("1"))  if isSeq(qual) || isArray(qual) =>
+    case literal("0")`.to`(qual`.sizeOrLength` Seq() `-` literal("1"))  if isSeq(qual) || isArray(qual) =>
       RangeToIndices.toIndicesSimplification(expr, qual)
     case _ => None
   }

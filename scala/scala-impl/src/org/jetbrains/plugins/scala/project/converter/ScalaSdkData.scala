@@ -17,7 +17,7 @@ import scala.xml.{Elem, PrettyPrinter}
 /**
  * @author Pavel Fatin
  */
-private case class ScalaSdkData(name: String, standardLibrary: LibraryData, languageLevel: String, compilerClasspath: Seq[String]) {
+private case class ScalaSdkData(name: String, standardLibrary: LibraryData, languageLevel: String, compilerClasspath: collection.Seq[String]) {
   def isEquivalentTo(compilerLibrary: LibraryData): Boolean =
     compilerClasspath.toSet == compilerLibrary.classesAsFileUrls.toSet
 
@@ -105,7 +105,7 @@ private object ScalaSdkData {
     ScalaSdkData(standardLibrary.name, standardLibrary, languageLevel, compilerClasspath)
   }
 
-  def languageLevelFrom(compilerClasspath: Seq[String]): String = {
+  def languageLevelFrom(compilerClasspath: Iterable[String]): String = {
     val compilerJarVersions = compilerClasspath.flatMap(path => versionOf(new File(path)).toSeq)
 
     compilerJarVersions.headOption.flatMap(languageLevelFrom).getOrElse(DefaultLanguageLevel)

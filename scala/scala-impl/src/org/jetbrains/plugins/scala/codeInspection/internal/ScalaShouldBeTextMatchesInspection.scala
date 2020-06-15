@@ -16,13 +16,13 @@ object ScalaShouldBeTextMatchesInspection extends SimplificationType() {
   private val `.getText`: Qualified = invocation("getText").from(Array(psiElementFqn))
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case base`.getText`() `==` (stringExpr(str)) =>
+    case base`.getText`Seq() `==` (stringExpr(str)) =>
       Some(replace(expr).withText(invocationText(base, "textMatches", str)).highlightFrom(base))
-    case stringExpr(str) `==` (base`.getText`()) =>
+    case stringExpr(str) `==` (base`.getText`Seq()) =>
       Some(replace(expr).withText(invocationText(base, "textMatches", str)).highlightAll)
-    case base`.getText`() `!=` (stringExpr(str)) =>
+    case base`.getText`Seq() `!=` (stringExpr(str)) =>
       Some(replace(expr).withText(invocationText(negation = true, base, "textMatches", str)).highlightFrom(base))
-    case stringExpr(str) `!=` (base`.getText`()) =>
+    case stringExpr(str) `!=` (base`.getText`Seq()) =>
       Some(replace(expr).withText(invocationText(negation = true, base, "textMatches", str)).highlightAll)
     case _ =>
       None

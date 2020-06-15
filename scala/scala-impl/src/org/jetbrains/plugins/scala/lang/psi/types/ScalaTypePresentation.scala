@@ -37,7 +37,7 @@ trait ScalaTypePresentation extends api.TypePresentation {
     val textEscaper: TextEscaper = nameRenderer
     val boundsRenderer = new TypeBoundsRenderer(textEscaper)
 
-    def typesText(types: Seq[ScType]): String = types
+    def typesText(types: Iterable[ScType]): String = types
       .map(innerTypeText(_))
       .commaSeparated(model = Model.Parentheses)
 

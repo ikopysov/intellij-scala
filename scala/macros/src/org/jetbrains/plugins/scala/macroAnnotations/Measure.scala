@@ -5,7 +5,7 @@ import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
 class Measure(params: Any*) extends StaticAnnotation {
-  def macroTransform(annottees: Any*) = macro Measure.measureImpl
+  def macroTransform(annottees: Any*): Any = macro Measure.measureImpl
 }
 
 object Measure {

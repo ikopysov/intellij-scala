@@ -77,7 +77,7 @@ class ScaladocCommandLineState(env: ExecutionEnvironment, project: Project)
   }
 
   private def visitAll(file: VirtualFile, scope: AnalysisScope): List[VirtualFile] = {
-    val acc = mutable.MutableList[VirtualFile]()
+    val acc = mutable.ListBuffer[VirtualFile]()
 
     def visitInner(
       file: VirtualFile,

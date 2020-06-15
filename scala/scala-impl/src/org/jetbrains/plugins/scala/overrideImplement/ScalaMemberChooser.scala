@@ -133,7 +133,7 @@ class ScalaMemberChooser[T <: ClassMember : scala.reflect.ClassTag](elements: Ar
 }
 
 object ScalaMemberChooser {
-  def sorted[T <: ClassMember](members: Seq[T], targetClass: ScTemplateDefinition): Seq[T] = {
+  def sorted[T <: ClassMember](members: collection.Seq[T], targetClass: ScTemplateDefinition): Seq[T] = {
     val groupedMembers = members.groupBy(cm => cm.getElement.getContainingClass)
     val sortedClasses = mutable.LinkedHashSet[PsiClass]()
     if (targetClass != null) {

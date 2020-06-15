@@ -209,14 +209,14 @@ object AbstractTestRunConfiguration {
   def SettingMap(): SettingMap = Map[SettingEntry, String]()
 
   private[test] trait TestCommandLinePatcher {
-    private var failedTests: Seq[(String, String)] = Seq()
+    private var failedTests: collection.Seq[(String, String)] = Seq()
 
-    def setFailedTests(failedTests: Seq[(String, String)]): Unit =
+    def setFailedTests(failedTests: collection.Seq[(String, String)]): Unit =
       this.failedTests = Option(failedTests).map(_.distinct).orNull
 
-    def getFailedTests: Seq[(String, String)] = failedTests
+    def getFailedTests: collection.Seq[(String, String)] = failedTests
 
-    def getClasses: Seq[String]
+    def getClasses: collection.Seq[String]
 
     @BeanProperty
     var configuration: RunConfigurationBase[_] = _

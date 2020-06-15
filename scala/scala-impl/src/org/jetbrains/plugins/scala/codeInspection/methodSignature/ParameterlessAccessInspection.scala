@@ -143,7 +143,7 @@ object ParameterlessAccessInspection {
 
   private object HasFunctionType {
 
-    def unapply(expression: ScExpression): Option[Seq[ScType]] = expression match {
+    def unapply(expression: ScExpression): Option[collection.Seq[ScType]] = expression match {
       case result.Typeable(api.FunctionType(_, seq)) => Some(seq)
       case _ => None
     }

@@ -94,8 +94,8 @@ trait ScalaConformance extends api.Conformance with TypeVariableUnification {
 
   protected def checkParameterizedType(
     parametersIterator: Iterator[PsiTypeParameter],
-    args1:              scala.Seq[ScType],
-    args2:              scala.Seq[ScType],
+    args1:              Iterable[ScType],
+    args2:              Iterable[ScType],
     _constraints:       ConstraintSystem,
     visited:            Set[PsiClass],
     checkWeak:          Boolean,

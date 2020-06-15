@@ -191,7 +191,7 @@ object ScalaPsiUtil {
     *
     * See SCL-2001, SCL-3485
     */
-  def tupled(s: Seq[Expression], context: PsiElement): Option[Seq[Expression]] = {
+  def tupled(s: collection.Seq[Expression], context: PsiElement): Option[collection.Seq[Expression]] = {
     implicit val scope: ElementScope = context.elementScope
 
     val maybeType = s match {
@@ -303,7 +303,7 @@ object ScalaPsiUtil {
           res
         }
 
-        def clearBadLinks(tps: Seq[TypeParameter]): Seq[TypeParameter] = tps.map {
+        def clearBadLinks(tps: collection.Seq[TypeParameter]): collection.Seq[TypeParameter] = tps.map {
           case TypeParameter(psiTypeParameter, parameters, lowerType, upperType) =>
             TypeParameter(
               psiTypeParameter,

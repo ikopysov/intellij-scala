@@ -19,7 +19,7 @@ object SizeToLength extends SimplificationType {
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = {
     expr match {
-      case (qual@Typeable(tpe)) `.size` () if isArray(qual) || isString(tpe) =>
+      case (qual@Typeable(tpe)) `.size` Seq() if isArray(qual) || isString(tpe) =>
         Some(replace(expr).withText(invocationText(qual, "length")).highlightFrom(qual))
       case _ => None
     }

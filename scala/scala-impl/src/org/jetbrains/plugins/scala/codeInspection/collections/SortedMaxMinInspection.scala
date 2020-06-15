@@ -16,7 +16,7 @@ object SortedHeadIsMin extends SimplificationType {
   override def hint: String = ScalaInspectionBundle.message("replace.sorted.head.with.min")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case qual`.sorted`()`.head`() =>
+    case qual`.sorted`Seq()`.head`Seq() =>
       Some(replace(expr).withText(invocationText(qual, "min")).highlightFrom(qual))
     case _ => None
   }
@@ -26,7 +26,7 @@ object SortedLastIsMax extends SimplificationType {
   override def hint: String = ScalaInspectionBundle.message("replace.sorted.last.with.max")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case qual`.sorted`()`.last`() =>
+    case qual`.sorted`Seq()`.last`Seq() =>
       Some(replace(expr).withText(invocationText(qual, "max")).highlightFrom(qual))
     case _ => None
   }
@@ -36,7 +36,7 @@ object SortByHeadIsMinBy extends SimplificationType {
   override def hint: String = ScalaInspectionBundle.message("replace.sortBy.head.with.minBy")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case qual`.sortBy`(f)`.head`() =>
+    case qual`.sortBy`(f)`.head`Seq() =>
       Some(replace(expr).withText(invocationText(qual, "minBy", f)).highlightFrom(qual))
     case _ => None
   }
@@ -46,7 +46,7 @@ object SortByLastIsMaxBy extends SimplificationType {
   override def hint: String = ScalaInspectionBundle.message("replace.sortBy.last.with.maxBy")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case qual`.sortBy`(f)`.last`() =>
+    case qual`.sortBy`(f)`.last`Seq() =>
       Some(replace(expr).withText(invocationText(qual, "maxBy", f)).highlightFrom(qual))
     case _ => None
   }

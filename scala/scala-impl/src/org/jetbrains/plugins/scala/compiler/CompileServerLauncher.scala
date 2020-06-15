@@ -24,7 +24,7 @@ import org.jetbrains.plugins.scala.project.ProjectExt
 import org.jetbrains.plugins.scala.server.CompileServerToken
 import org.jetbrains.plugins.scala.util.{IntellijPlatformJars, LibraryJars, ScalaPluginJars}
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.util.Try
 import scala.util.control.Exception._
 
@@ -112,7 +112,7 @@ object CompileServerLauncher {
     }
   }
 
-  private def compilerServerAdditionalCP(): Seq[File] = for {
+  private def compilerServerAdditionalCP(): Iterable[File] = for {
     extension        <- CompileServerClasspathProvider.implementations
     pluginDescriptor = extension.getPluginDescriptor
     pluginsLibs      = new File(pluginDescriptor.getPluginPath.toFile, "lib")
@@ -158,7 +158,7 @@ object CompileServerLauncher {
         } else Nil
         val isScalaCompileServer = "-Dij.scala.compile.server=true"
 
-        val vmOptions: Seq[String] = if (isUnitTestMode && project == null) Seq() else {
+        val vmOptions: collection.Seq[String] = if (isUnitTestMode && project == null) Seq() else {
           val buildProcessParameters = BuildProcessParametersProvider.EP_NAME.getExtensions(project).asScala
             .flatMap(_.getVMArguments.asScala)
           val extraJvmParameters = CompileServerVmOptionsProvider.implementations

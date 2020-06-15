@@ -14,7 +14,7 @@ import scala.collection.mutable
 // TODO: remove maximum common indentation from code examples {{{ }}} not to shift it far to the right
 private object ScaladocWikiProcessor {
 
-  final case class WikiProcessorResult(commentText: String, sections: Seq[Section])
+  final case class WikiProcessorResult(commentText: String, sections: collection.Seq[Section])
   final case class Section(title: String, content: String)
 
   def replaceWikiWithTags(comment: ScDocComment): WikiProcessorResult = {
@@ -44,16 +44,16 @@ private object ScaladocWikiProcessor {
   private def getWikiTextRepresentation(
     comment: PsiElement,
     macroFinder: MacroFinder
-  ): (mutable.StringBuilder, mutable.StringBuilder, Seq[Section]) = {
+  ): (mutable.StringBuilder, mutable.StringBuilder, collection.Seq[Section]) = {
 
-    val commentBody = StringBuilder.newBuilder
-    val tagsPart = StringBuilder.newBuilder
+    val commentBody = new StringBuilder()
+    val tagsPart = new StringBuilder()
     val sections = mutable.ArrayBuffer.empty[Section]
 
     def visitTagElement(tagElement: ScDocTag): Unit =
       tagElement.name match {
         case CustomSectionTag(sectionName)   =>
-          val sectionBody = StringBuilder.newBuilder
+          val sectionBody = new StringBuilder()
           tagElement.children.foreach(visitElement(_, sectionBody, processingCustomTag = true))
           sections += Section(sectionName, sectionBody.toString.trim)
         case MyScaladocParsing.INHERITDOC_TAG =>

@@ -36,7 +36,7 @@ class ImportPanelConverterProvider extends ConverterProvider("ImportPanelConvert
         "sortImports"
       )
 
-    def getElements: Seq[Element] = {
+    def getElements: collection.Seq[Element] = {
       context.getSettingsBaseDir.listFiles().find(_.getName == "scala_settings.xml") match {
         case Some(file) =>
           import com.intellij.conversion.impl.ConversionContextImpl

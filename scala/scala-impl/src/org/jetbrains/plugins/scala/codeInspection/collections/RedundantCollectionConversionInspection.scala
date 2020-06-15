@@ -21,7 +21,7 @@ object RedundantCollectionConversion extends SimplificationType {
     // will match <Seq(1, 2).to> and <Seq(1, 2).to[List]> but not <Seq(1, 2).to>[List]
     // because of a check in MethodRepr in `.toCollection`
     expr match {
-      case (base@Typeable(baseType)) `.toCollection` () if baseType.conforms(typeAfterConversion) =>
+      case (base@Typeable(baseType)) `.toCollection` Seq() if baseType.conforms(typeAfterConversion) =>
         val simplification = replace(expr).withText(base.getText).highlightFrom(base)
         Some(simplification)
       case _ => None

@@ -71,7 +71,7 @@ object ComparingUtil {
 
     def isNeverSameType(tp1: ScType, tp2: ScType) = isNeverSubType(tp1, tp2, sameType = true)
 
-    def isNeverSubArgs(tps1: Seq[ScType], tps2: Seq[ScType], tparams: Seq[PsiTypeParameter]): Boolean = {
+    def isNeverSubArgs(tps1: Iterable[ScType], tps2: Iterable[ScType], tparams: Iterable[PsiTypeParameter]): Boolean = {
       def isNeverSubArg(t1: ScType, t2: ScType, variance: Variance) = {
         variance match {
           case Covariant     => isNeverSubType(t2, t1)
@@ -83,7 +83,7 @@ object ComparingUtil {
         case scParam: ScTypeParam => scParam.variance
         case _ => Invariant
       }
-      tps1.zip(tps2).zip(tparams.map(getVariance)) exists {
+      tps1.zip(tps2).zip(tparams.map(getVariance)).exists {
         case ((t1, t2), vr) => isNeverSubArg(t1, t2, vr)
         case _ => false
       }

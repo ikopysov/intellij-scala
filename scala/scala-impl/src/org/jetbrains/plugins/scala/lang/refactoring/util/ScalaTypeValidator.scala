@@ -24,7 +24,7 @@ class ScalaTypeValidator(val selectedElement: PsiElement, override val noOccurre
 
   private implicit def ctx: ProjectContext = selectedElement
 
-  protected override def findConflictsImpl(name: String, allOcc: Boolean): Seq[(PsiNamedElement, String)] = {
+  protected override def findConflictsImpl(name: String, allOcc: Boolean): collection.Seq[(PsiNamedElement, String)] = {
     //returns declaration and message
     val container = enclosingContainer(allOcc)
     if (container == null) return Seq.empty
@@ -37,7 +37,7 @@ class ScalaTypeValidator(val selectedElement: PsiElement, override val noOccurre
 
   import ScalaTypeValidator._
 
-  protected def forbiddenNames(position: PsiElement, name: String): Seq[(PsiNamedElement, String)] = {
+  protected def forbiddenNames(position: PsiElement, name: String): collection.Seq[(PsiNamedElement, String)] = {
     val result = mutable.ArrayBuffer.empty[(PsiNamedElement, String)]
 
     val processor = new BaseProcessor(ValueSet(ResolveTargets.CLASS)) {
@@ -56,7 +56,7 @@ class ScalaTypeValidator(val selectedElement: PsiElement, override val noOccurre
     result
   }
 
-  protected def forbiddenNamesInBlock(commonParent: PsiElement, name: String): Seq[(PsiNamedElement, String)] = {
+  protected def forbiddenNamesInBlock(commonParent: PsiElement, name: String): collection.Seq[(PsiNamedElement, String)] = {
     val result = mutable.ArrayBuffer.empty[(PsiNamedElement, String)]
 
     for {

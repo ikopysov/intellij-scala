@@ -15,7 +15,7 @@ object ReverseTakeReverse extends SimplificationType {
   override def hint: String = ScalaInspectionBundle.message("replace.reverse.take.reverse.with.takeRight")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case qual`.reverse`()`.take`(n)`.reverse`() =>
+    case qual`.reverse`Seq()`.take`(n)`.reverse`Seq() =>
       Some(replace(expr).withText(invocationText(qual, "takeRight", n)).highlightFrom(qual))
     case _ => None
   }

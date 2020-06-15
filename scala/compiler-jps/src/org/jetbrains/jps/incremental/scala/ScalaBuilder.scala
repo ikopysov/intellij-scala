@@ -26,8 +26,8 @@ object ScalaBuilder {
 
   def compile(context: CompileContext,
               chunk: ModuleChunk,
-              sources: Seq[File],
-              allSources: Seq[File],
+              sources: collection.Seq[File],
+              allSources: collection.Seq[File],
               modules: Set[JpsModule],
               client: Client): Either[String, ModuleLevelBuilder.ExitCode] = {
 

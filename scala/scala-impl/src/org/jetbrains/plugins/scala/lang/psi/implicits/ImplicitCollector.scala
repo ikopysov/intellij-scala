@@ -65,7 +65,7 @@ object ImplicitCollector {
     def presentableTypeText: String = tp.presentableText(place)
   }
 
-  def probableArgumentsFor(parameter: ScalaResolveResult): Seq[(ScalaResolveResult, FullInfoResult)] = {
+  def probableArgumentsFor(parameter: ScalaResolveResult): collection.Seq[(ScalaResolveResult, FullInfoResult)] = {
     parameter.implicitSearchState.map { state =>
       val collector = new ImplicitCollector(state.copy(fullInfo = true))
       collector.collect().flatMap { r =>
@@ -75,7 +75,7 @@ object ImplicitCollector {
           case _ => Seq.empty
         }
       }
-    } getOrElse {
+    }.getOrElse {
       Seq.empty
     }
   }
@@ -122,8 +122,8 @@ class ImplicitCollector(place: PsiElement,
 
   private def isExtensionConversion: Boolean = extensionData.isDefined
 
-  def collect(): Seq[ScalaResolveResult] = {
-    def calc(): Seq[ScalaResolveResult] = {
+  def collect(): collection.Seq[ScalaResolveResult] = {
+    def calc(): collection.Seq[ScalaResolveResult] = {
       clazz match {
         case Some(c) if InferUtil.tagsAndManifists.contains(c.qualifiedName) => return Seq.empty
         case _                                                               =>
@@ -271,7 +271,7 @@ class ImplicitCollector(place: PsiElement,
         case None => filteredCandidates = Set.empty
       }
     }
-    results.toSet
+    results
   }
 
   private def simpleConformanceCheck(c: ScalaResolveResult): Option[ScalaResolveResult] = {
@@ -291,7 +291,7 @@ class ImplicitCollector(place: PsiElement,
     }
   }
 
-  private def inferValueType(tp: ScType): (ScType, Seq[TypeParameter]) = {
+  private def inferValueType(tp: ScType): (ScType, collection.Seq[TypeParameter]) = {
     if (isExtensionConversion) {
       tp match {
         case ScTypePolymorphicType(internalType, typeParams) =>
@@ -332,7 +332,7 @@ class ImplicitCollector(place: PsiElement,
       Some(c.copy(problems = Seq(WrongTypeParameterInferred), implicitReason = result))
     }
 
-    def reportParamNotFoundResult(implicitParams: Seq[ScalaResolveResult]): Option[ScalaResolveResult] = {
+    def reportParamNotFoundResult(implicitParams: collection.Seq[ScalaResolveResult]): Option[ScalaResolveResult] = {
       reportWrong(c.copy(implicitParameters = implicitParams), ImplicitParameterNotFoundResult)
     }
 
@@ -348,7 +348,7 @@ class ImplicitCollector(place: PsiElement,
 
     def fullResult(
       resType:          ScType,
-      implicitParams:   Seq[ScalaResolveResult],
+      implicitParams:   collection.Seq[ScalaResolveResult],
       checkConformance: Boolean = false
     ): Option[ScalaResolveResult] = {
       val (valueType, typeParams) = inferValueType(resType)

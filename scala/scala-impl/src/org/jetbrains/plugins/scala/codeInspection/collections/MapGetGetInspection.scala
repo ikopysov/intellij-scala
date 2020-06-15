@@ -19,7 +19,7 @@ object MapGetGet extends SimplificationType() {
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = {
     expr match {
-      case map`.getOnMap`(key)`.get`() =>
+      case map`.getOnMap`(key)`.get` Seq() =>
         Some(replace(expr)
           .withText(replacementText(map, key))
           .highlightFrom(map))

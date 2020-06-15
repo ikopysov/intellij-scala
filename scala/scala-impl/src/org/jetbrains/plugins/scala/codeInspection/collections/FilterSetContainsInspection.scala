@@ -17,7 +17,7 @@ object FilterSetContainsInspection extends SimplificationType {
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = {
     expr match {
-      case qual `.filter` (set `.contains` ()) if isSet(set) =>
+      case qual `.filter` (set `.contains` Seq()) if isSet(set) =>
         val highlightStart = set.end + 1
         val highlightEnd = expr.end - 1
         Some(replace(expr).withText(invocationText(qual, "filter", set)).highlightRange(highlightStart, highlightEnd))

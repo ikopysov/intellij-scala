@@ -34,7 +34,7 @@ trait ShapelessUtils {
   /**
     * Extracts case class field names and types or element types from tuples to be used by HList generator
     */
-  protected def extractFields(tp: ScType): Seq[(String, ScType)] = tp match {
+  protected def extractFields(tp: ScType): collection.Seq[(String, ScType)] = tp match {
     case ParameterizedType(ScDesignatorType(c: ScClass), args) if c.name.startsWith(tupleN) =>
       args.zipWithIndex.map{e => (s"_${e._2}", e._1)}
     case ScDesignatorType(c: ScClass) if c.isCase =>
@@ -44,6 +44,6 @@ trait ShapelessUtils {
     case _ => Seq.empty
   }
 
-  protected def hlistText(componentTypes: Seq[ScType]): String =
+  protected def hlistText(componentTypes: Iterable[ScType]): String =
     componentTypes.foldRight(fqHNil)((p, suffix) => s"$fqColonColon[${p.canonicalText}, $suffix]")
 }

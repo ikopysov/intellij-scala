@@ -54,7 +54,7 @@ class ScalaFrameExtraVariablesProvider extends FrameExtraVariablesProvider {
     val element = inReadAction(sourcePosition.getElementAt)
 
     if (element == null) Collections.emptySet()
-    else getVisibleVariables(element, evaluationContext, alreadyCollected).map(toTextWithImports).asJava
+    else getVisibleVariables(element, evaluationContext, alreadyCollected).unsorted.map(toTextWithImports).asJava
   }
 
   private def getVisibleVariables(elem: PsiElement, evaluationContext: EvaluationContext, alreadyCollected: util.Set[String]) = {

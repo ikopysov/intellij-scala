@@ -31,12 +31,12 @@ abstract class ScalaValidator(selectedElement: PsiElement,
   def enclosingContainer(allOccurrences: Boolean): PsiElement =
     if (allOccurrences) enclosingContainerAll else enclosingOne
 
-  final def findConflicts(name: String, allOccurrences: Boolean): Seq[(PsiNamedElement, String)] =
+  final def findConflicts(name: String, allOccurrences: Boolean): collection.Seq[(PsiNamedElement, String)] =
     findConflictsImpl(name, allOccurrences).filter {
       case (namedElement, _) => namedElement != selectedElement
     }
 
-  protected def findConflictsImpl(name: String, allOccurrences: Boolean): Seq[(PsiNamedElement, String)]
+  protected def findConflictsImpl(name: String, allOccurrences: Boolean): collection.Seq[(PsiNamedElement, String)]
 
   def validateName(name: String): String = {
     if (noOccurrences) return name

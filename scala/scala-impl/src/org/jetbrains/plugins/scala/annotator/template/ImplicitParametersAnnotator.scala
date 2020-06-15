@@ -35,7 +35,7 @@ object ImplicitParametersAnnotator extends AnnotatorPart[ImplicitArgumentsOwner]
     }
   }
 
-  private def highlightNotFound(element: ImplicitArgumentsOwner, parameters: Seq[ScalaResolveResult])
+  private def highlightNotFound(element: ImplicitArgumentsOwner, parameters: collection.Seq[ScalaResolveResult])
                                (implicit holder: ScalaAnnotationHolder): Unit = {
     val settings = ScalaProjectSettings.getInstance(element.getProject)
 

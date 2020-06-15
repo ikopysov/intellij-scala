@@ -332,7 +332,7 @@ object ScalaDocGenerator {
       case _ => ""
     }
 
-  private def insertCustomSections(javaDoc: String, sections: Seq[ScaladocWikiProcessor.Section]): String = {
+  private def insertCustomSections(javaDoc: String, sections: Iterable[ScaladocWikiProcessor.Section]): String = {
     import DocumentationMarkup._
     val sectionsEnd = javaDoc.indexOf(SECTIONS_END)
     if (sectionsEnd > -1)
@@ -353,7 +353,7 @@ object ScalaDocGenerator {
   private def insertCustomSections(
     javadoc: String,
     index: Int,
-    sections: Seq[ScaladocWikiProcessor.Section],
+    sections: Iterable[ScaladocWikiProcessor.Section],
     createSectionsTag: Boolean
   ): String = {
     import DocumentationMarkup._
@@ -368,7 +368,7 @@ object ScalaDocGenerator {
     builder.toString
   }
 
-  private def appendCustomSections(output: JStringBuilder, sections: Seq[ScaladocWikiProcessor.Section]): Unit =
+  private def appendCustomSections(output: JStringBuilder, sections: Iterable[ScaladocWikiProcessor.Section]): Unit =
     sections.foreach { section =>
       import DocumentationMarkup._
       output
@@ -383,7 +383,7 @@ object ScalaDocGenerator {
   private def prepareFakeJavaElementWithComment(
     docCommentOwner: PsiDocCommentOwner,
     docComment: ScDocComment
-  ): Option[(PsiDocCommentOwner, Seq[ScaladocWikiProcessor.Section])] = {
+  ): Option[(PsiDocCommentOwner, collection.Seq[ScaladocWikiProcessor.Section])] = {
     val WikiProcessorResult(withReplacedWikiTags, sections) = ScaladocWikiProcessor.replaceWikiWithTags(docComment)
     createFakeJavaElement(docCommentOwner, withReplacedWikiTags).map((_, sections))
   }

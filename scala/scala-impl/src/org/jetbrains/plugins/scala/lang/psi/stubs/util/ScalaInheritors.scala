@@ -22,12 +22,13 @@ import org.jetbrains.plugins.scala.lang.psi.types.{ScCompoundType, ScType, ScTyp
 import org.jetbrains.plugins.scala.macroAnnotations.{CachedInUserData, ModCount}
 import org.jetbrains.plugins.scala.util.ScEquivalenceUtil
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 import scala.collection.mutable.ArrayBuffer
 import scala.reflect.ClassTag
 
 object ScalaInheritors {
 
+  @scala.annotation.tailrec
   def directInheritorCandidates(clazz: PsiClass, scope: SearchScope): Seq[ScTemplateDefinition] =
     scope match {
       case scope: GlobalSearchScope => directInheritorCandidates(clazz, scope)
@@ -35,7 +36,7 @@ object ScalaInheritors {
       case _                        => Seq()
     }
 
-  def directInheritorCandidates(clazz: PsiClass, scope: GlobalSearchScope): Seq[ScTemplateDefinition] = {
+  def directInheritorCandidates(clazz: PsiClass, scope: GlobalSearchScope): collection.Seq[ScTemplateDefinition] = {
     val name: String = clazz.name
     if (name == null || clazz.isEffectivelyFinal) return Seq.empty
 
@@ -55,7 +56,7 @@ object ScalaInheritors {
     inheritors
   }
 
-  def directInheritorCandidates(clazz: PsiClass, localScope: LocalSearchScope): Seq[ScTemplateDefinition] = {
+  def directInheritorCandidates(clazz: PsiClass, localScope: LocalSearchScope): collection.Seq[ScTemplateDefinition] = {
     val name: String = clazz.name
     if (name == null || clazz.isEffectivelyFinal) return Seq.empty
 

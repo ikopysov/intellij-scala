@@ -16,7 +16,7 @@ import org.jetbrains.plugins.scala.extensions._
 import org.jetbrains.plugins.scala.lang.psi.api.toplevel.typedef.ScTypeDefinition
 import org.jetbrains.plugins.scala.project._
 
-import scala.collection.JavaConverters.collectionAsScalaIterableConverter
+import scala.jdk.CollectionConverters._
 
 package object tasty {
   // TODO Remove the structural types when the project use Scala 2.13
@@ -95,7 +95,7 @@ package object tasty {
     invokeLater {
       val notification = new Notification("TASTy", "TASTy", message, NotificationType.INFORMATION)
       Notifications.Bus.notify(notification)
-      AlarmFactory.getInstance.create.addRequest(() => notification.expire(), TimeUnit.SECONDS.toMillis(1))
+      AlarmFactory.getInstance.create.addRequest((() => notification.expire()): Runnable, TimeUnit.SECONDS.toMillis(1))
     }
   }
 }

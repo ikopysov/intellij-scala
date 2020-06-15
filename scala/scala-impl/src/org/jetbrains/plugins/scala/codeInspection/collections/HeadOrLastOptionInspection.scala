@@ -18,10 +18,10 @@ object IfElseToHeadOption extends SimplificationType {
   override def description: String = ScalaInspectionBundle.message("ifstmt.to.headOption")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case IfStmt(CheckIsEmpty(coll, _, _), scalaNone(), scalaSome(coll2`.head`()))
+    case IfStmt(CheckIsEmpty(coll, _, _), scalaNone(), scalaSome(coll2`.head` Seq()))
       if PsiEquivalenceUtil.areElementsEquivalent(coll, coll2) =>
       Some(replace(expr).withText(invocationText(coll, "headOption")).highlightAll)
-    case IfStmt(CheckNonEmpty(coll, _, _), scalaSome(coll2`.head`()), scalaNone())
+    case IfStmt(CheckNonEmpty(coll, _, _), scalaSome(coll2`.head` Seq()), scalaNone())
       if PsiEquivalenceUtil.areElementsEquivalent(coll, coll2) =>
       Some(replace(expr).withText(invocationText(coll, "headOption")).highlightAll)
     case _ => None
@@ -33,10 +33,10 @@ object IfElseToLastOption extends SimplificationType {
   override def description: String = ScalaInspectionBundle.message("ifstmt.to.lastOption")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case IfStmt(CheckIsEmpty(coll, _, _), scalaNone(), scalaSome(coll2`.last`()))
+    case IfStmt(CheckIsEmpty(coll, _, _), scalaNone(), scalaSome(coll2`.last` Seq()))
       if PsiEquivalenceUtil.areElementsEquivalent(coll, coll2) =>
       Some(replace(expr).withText(invocationText(coll, "lastOption")).highlightAll)
-    case IfStmt(CheckNonEmpty(coll, _, _), scalaSome(coll2`.last`()), scalaNone())
+    case IfStmt(CheckNonEmpty(coll, _, _), scalaSome(coll2`.last` Seq()), scalaNone())
       if PsiEquivalenceUtil.areElementsEquivalent(coll, coll2) =>
       Some(replace(expr).withText(invocationText(coll, "lastOption")).highlightAll)
     case _ => None
@@ -48,7 +48,7 @@ object LiftToHeadOption extends SimplificationType {
   override def description: String = ScalaInspectionBundle.message("lift.to.headOption")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case (coll`.lift`())`.apply`(literal("0")) if isSeq(coll) || isArray(coll) =>
+    case (coll`.lift` Seq())`.apply`(literal("0")) if isSeq(coll) || isArray(coll) =>
       Some(replace(expr).withText(invocationText(coll, "headOption")).highlightFrom(coll))
     case _ => None
   }
@@ -59,7 +59,7 @@ object LiftToLastOption extends SimplificationType {
   override def description: String = ScalaInspectionBundle.message("lift.to.lastOption")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case (coll`.lift`())`.apply`(coll2`.sizeOrLength`() `-` literal("1"))
+    case (coll`.lift` Seq())`.apply`(coll2`.sizeOrLength` Seq() `-` literal("1"))
       if PsiEquivalenceUtil.areElementsEquivalent(coll, coll2) && (isSeq(coll) || isArray(coll)) =>
       Some(replace(expr).withText(invocationText(coll, "lastOption")).highlightFrom(coll))
     case _ => None

@@ -28,7 +28,7 @@ class IntroduceFieldContext[T <: PsiElement](val project: Project,
                                              val types: Array[ScType],
                                              val aClass: ScTemplateDefinition) {
 
-  val occurrences: Seq[TextRange] = element match {
+  val occurrences: collection.Seq[TextRange] = element match {
     case expr: ScExpression => getOccurrenceRanges(expr, aClass.extendsBlock)
     case _ => null
   }

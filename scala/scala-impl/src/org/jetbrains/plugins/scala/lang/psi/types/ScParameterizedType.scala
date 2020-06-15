@@ -18,7 +18,7 @@ import org.jetbrains.plugins.scala.lang.psi.types.nonvalue.ScTypePolymorphicType
 import org.jetbrains.plugins.scala.lang.psi.types.recursiveUpdate.ScSubstitutor
 import org.jetbrains.plugins.scala.util.HashBuilder._
 
-final class ScParameterizedType private(override val designator: ScType, override val typeArguments: Seq[ScType]) extends ParameterizedType with ScalaType {
+final class ScParameterizedType private(override val designator: ScType, override val typeArguments: collection.Seq[ScType]) extends ParameterizedType with ScalaType {
 
   override protected def calculateAliasType: Option[AliasType] = {
     designator match {
@@ -141,7 +141,7 @@ final class ScParameterizedType private(override val designator: ScType, overrid
 
 object ScParameterizedType {
 
-  def apply(designator: ScType, typeArgs: Seq[ScType]): ValueType = {
+  def apply(designator: ScType, typeArgs: collection.Seq[ScType]): ValueType = {
 
     val simple = new ScParameterizedType(designator, typeArgs)
     designator match {

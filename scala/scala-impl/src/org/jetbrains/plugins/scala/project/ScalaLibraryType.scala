@@ -103,7 +103,7 @@ object ScalaLibraryType {
           )
         }
 
-        private def addRootsInner(files: Seq[File],
+        private def addRootsInner(files: Iterable[File],
                                   rootType: OrderRootType = OrderRootType.CLASSES)
                                  (implicit editor: libraryEditor.LibraryEditor): Unit =
           for {

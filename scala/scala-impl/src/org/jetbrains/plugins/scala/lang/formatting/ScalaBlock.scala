@@ -354,7 +354,10 @@ object SubBlocksContext {
     new SubBlocksContext(
       additionalNodes = Seq(),
       alignment = None,
-      childrenAdditionalContexts = childNodesAlignment.mapValues(a => new SubBlocksContext(Seq(), Some(a), Map()))
+      childrenAdditionalContexts = childNodesAlignment
+        .view
+        .mapValues(a => new SubBlocksContext(Seq(), Some(a), Map()))
+        .toMap
     )
   }
 }

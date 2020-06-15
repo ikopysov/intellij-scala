@@ -120,7 +120,8 @@ private class ScalaBasicCompletionProvider extends CompletionProvider[Completion
             qualifierType = Some(qualifierCastType)
           ) {
 
-            private val lookupStrings = mutable.Set(defaultLookupElements.map(_.getLookupString): _*)
+            private val lookupStrings =
+              mutable.Set(defaultLookupElements.map(_.getLookupString).toSeq: _*)
             private val decorator = insertHandlerDecorator(canonicalText)
 
             override protected def validLookupElement(result: ScalaResolveResult): Option[LookupElement] = for {
@@ -157,7 +158,7 @@ object ScalaBasicCompletionProvider {
     private val isInTypeElement = completion.isInTypeElement(getPlace)
     private val isInStableCodeReference = getPlace.isInstanceOf[ScStableCodeReference]
 
-    final def lookupElements: Seq[LookupElement] = {
+    final def lookupElements: collection.Seq[LookupElement] = {
       ProgressManager.checkCanceled()
       getPlace.doResolve(this)
 

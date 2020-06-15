@@ -176,7 +176,7 @@ package object project {
     def scalaCompilerSettings: ScalaCompilerSettings =
       compilerConfiguration.getSettingsForModule(module)
 
-    def configureScalaCompilerSettingsFrom(source: String, options: Seq[String]): Unit =
+    def configureScalaCompilerSettingsFrom(source: String, options: collection.Seq[String]): Unit =
       compilerConfiguration.configureSettingsForModule(module, source, ScalaCompilerSettings.fromOptions(options))
 
     def scalaLanguageLevel: Option[ScalaLanguageLevel] =
@@ -188,7 +188,7 @@ package object project {
     def isCompilerStrictMode: Boolean =
       scalaModuleSettings.exists(_.isCompilerStrictMode)
 
-    def scalaCompilerClasspath: Seq[File] = module.scalaSdk
+    def scalaCompilerClasspath: collection.Seq[File] = module.scalaSdk
       .fold(throw new ScalaSdkNotConfiguredException(module)) {
         _.properties.compilerClasspath
       }

@@ -24,7 +24,7 @@ import org.jetbrains.plugins.scala.util.TypeAnnotationUtil
 
 object CreateFromUsageUtil {
 
-  def uniqueNames(names: Seq[String]): List[String] = {
+  def uniqueNames(names: collection.Seq[String]): List[String] = {
     names.foldLeft(List[String]()) { (r, h) =>
       (h #:: Stream.from(1).map(h + _)).find(!r.contains(_)).get :: r
     }.reverse
@@ -60,7 +60,7 @@ object CreateFromUsageUtil {
     }
   }
 
-  def paramsText(args: Seq[PsiElement]): String = {
+  def paramsText(args: collection.Seq[PsiElement]): String = {
     val (names, types) = args.map(nameAndTypeForArg).unzip
     (uniqueNames(names), types).zipped.map((name, tpe) => s"$name: ${tpe.canonicalText}").mkString("(", ", ", ")")
   }

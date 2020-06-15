@@ -34,7 +34,7 @@ object ScalaCode {
   private val Placeholder = "placeholder$0"
 
   // "unquote-splicing"
-  case class @@(es: Seq[PsiElement], separator: String = ", ")
+  case class @@(es: collection.Seq[PsiElement], separator: String = ", ")
 
   def parseElement(s: String)(implicit project: ProjectContext): PsiElement = parse(s).getFirstChild
 

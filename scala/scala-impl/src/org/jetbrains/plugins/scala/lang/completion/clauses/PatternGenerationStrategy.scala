@@ -15,7 +15,7 @@ import org.jetbrains.plugins.scala.lang.psi.types.{ScCompoundType, ScType, TypeP
 sealed trait PatternGenerationStrategy {
   def canBeExhaustive: Boolean
 
-  def patterns: Seq[PatternComponents]
+  def patterns: collection.Seq[PatternComponents]
 }
 
 object PatternGenerationStrategy {
@@ -24,19 +24,20 @@ object PatternGenerationStrategy {
 
   implicit class StrategyExt(private val strategy: PatternGenerationStrategy) extends AnyVal {
 
-    def adjustTypes(components: Seq[PatternComponents],
-                    caseClauses: Seq[ScCaseClause]): Unit =
+    def adjustTypes(components: collection.Seq[PatternComponents],
+                    caseClauses: collection.Seq[ScCaseClause]): Unit =
       adjustTypesOnClauses(
         addImports = strategy.isInstanceOf[DirectInheritorsGenerationStrategy],
-        caseClauses.zip(components): _*
+        caseClauses.zip(components)
       )
 
     def createClauses(prefix: Option[String] = None,
                       suffix: Option[String] = None)
-                     (implicit project: Project): (Seq[PatternComponents], String) = {
+                     (implicit project: Project): (collection.Seq[PatternComponents], String) = {
       val components = strategy.patterns
 
-      val clausesText = components.map(_.canonicalClauseText)
+      val clausesText = components
+        .map(_.canonicalClauseText)
         .mkString(
           prefix.getOrElse(ScalaKeyword.MATCH + " {\n"),
           "\n",
@@ -99,7 +100,7 @@ object PatternGenerationStrategy {
 
     private[this] val EnumerationFQN = "scala.Enumeration"
 
-    def unapply(enumClass: ScObject): Option[Seq[ScValue]] =
+    def unapply(enumClass: ScObject): Option[collection.Seq[ScValue]] =
       if (enumClass.supers.map(_.qualifiedName).contains(EnumerationFQN))
         Some(enumClass.members.filterBy[ScValue])
       else
@@ -134,11 +135,11 @@ object PatternGenerationStrategy {
   }
 
   private final class EnumGenerationStrategy(enumClass: PsiClass, qualifiedName: String,
-                                             membersNames: Seq[String]) extends PatternGenerationStrategy {
+                                             membersNames: collection.Seq[String]) extends PatternGenerationStrategy {
 
     override def canBeExhaustive = true
 
-    override def patterns: Seq[StablePatternComponents] = membersNames.map { name =>
+    override def patterns: collection.Seq[StablePatternComponents] = membersNames.map { name =>
       new StablePatternComponents(enumClass, qualifiedName + "." + name)
     }
   }

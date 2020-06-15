@@ -11,7 +11,7 @@ import org.jetbrains.plugins.scala.lang.resolve.ScalaResolveResult
 import scala.collection.JavaConverters.asJavaCollectionConverter
 
 class ImplicitArgumentsTreeStructure(project: Project,
-                                     results: Seq[ScalaResolveResult])
+                                     results: Iterable[ScalaResolveResult])
   extends AbstractTreeStructure {
 
   override def getRootElement: AnyRef = new RootNode

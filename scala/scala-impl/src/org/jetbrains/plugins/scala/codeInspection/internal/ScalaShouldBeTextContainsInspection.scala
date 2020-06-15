@@ -18,7 +18,7 @@ object ScalaShouldBeTextContainsInspection extends SimplificationType() {
   private val `.contains`: Qualified = invocation("contains")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case base`.getText`()`.contains`(charExpr(arg)) =>
+    case base`.getText` Seq()`.contains`(charExpr(arg)) =>
       Some(replace(expr).withText(invocationText(base, "textContains", arg)).highlightFrom(base))
     case _ =>
       None

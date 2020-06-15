@@ -22,7 +22,7 @@ object FlattenSimplification extends SimplificationType {
     expr match {
       case seqOfSeqs `.flatMap` (identityOperation()) => toSimplification(expr, seqOfSeqs)
       case qual `.getOrElse` (scalaNone()) if isNestedOption(qual) => toSimplification(expr, qual)
-      case qual `.map` (underscore() `.get` ()) if isNestedOption(qual) => toSimplification(expr, qual)
+      case qual `.map` (underscore() `.get` Seq()) if isNestedOption(qual) => toSimplification(expr, qual)
       case _ => None
     }
 
@@ -50,9 +50,9 @@ object FlattenSimplification extends SimplificationType {
 
     def unapplySeq(expr: ScExpression): Option[Seq[ScExpression]] = expr match {
       case _ qualIdentity(arg) => Some(Seq(arg))
-      case _ qualIdentity() => Some(Nil)
+      case _ qualIdentity Seq() => Some(Nil)
       case unqualIdentity(arg) => Some(Seq(arg))
-      case unqualIdentity() => Some(Nil)
+      case unqualIdentity Seq() => Some(Nil)
       case _ => None
     }
   }

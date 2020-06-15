@@ -41,19 +41,19 @@ trait ScTemplateDefinition extends ScNamedElement with PsiClassAdapter with Type
 
   def getTypeWithProjections(thisProjections: Boolean = false): TypeResult
 
-  def functions: Seq[ScFunction] = extendsBlock.functions
+  def functions: collection.Seq[ScFunction] = extendsBlock.functions
 
-  def aliases: Seq[ScTypeAlias] = extendsBlock.aliases
+  def aliases: collection.Seq[ScTypeAlias] = extendsBlock.aliases
 
-  def members: Seq[ScMember] = extendsBlock.members
+  def members: collection.Seq[ScMember] = extendsBlock.members
 
-  def typeDefinitions: Seq[ScTypeDefinition] = extendsBlock.typeDefinitions
+  def typeDefinitions: collection.Seq[ScTypeDefinition] = extendsBlock.typeDefinitions
 
-  def syntheticMethods: Seq[ScFunction] = Seq.empty
+  def syntheticMethods: collection.Seq[ScFunction] = Seq.empty
 
-  def syntheticTypeDefinitions: Seq[ScTypeDefinition] = Seq.empty
+  def syntheticTypeDefinitions: collection.Seq[ScTypeDefinition] = Seq.empty
 
-  def syntheticMembers: Seq[ScMember] = Seq.empty
+  def syntheticMembers: collection.Seq[ScMember] = Seq.empty
 
   def selfTypeElement: Option[ScSelfTypeElement]
 
@@ -61,7 +61,7 @@ trait ScTemplateDefinition extends ScNamedElement with PsiClassAdapter with Type
 
   def superTypes: List[ScType] = extendsBlock.superTypes
 
-  def supers: Seq[PsiClass] = extendsBlock.supers
+  def supers: collection.Seq[PsiClass] = extendsBlock.supers
 
   def allTypeSignatures: Iterator[TypeSignature]
 
@@ -87,7 +87,7 @@ object ScTemplateDefinition {
 
   implicit class SyntheticMembersExt(private val td: ScTemplateDefinition) extends AnyVal {
     //this method is not in the ScTemplateDefinition trait to avoid binary incompatible change
-    def membersWithSynthetic: Seq[ScMember] =
+    def membersWithSynthetic: collection.Seq[ScMember] =
       td.members ++ td.syntheticMembers ++ td.syntheticMethods ++ td.syntheticTypeDefinitions
 
   }

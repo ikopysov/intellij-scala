@@ -19,7 +19,7 @@ object FilterSize extends SimplificationType {
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = {
    expr match {
-      case qual`.filter`(cond)`.sizeOrLength`() =>
+      case qual`.filter`(cond)`.sizeOrLength` Seq() =>
         Some(replace(expr).withText(invocationText(qual, "count", cond)).highlightFrom(qual))
       case _ => None
     }

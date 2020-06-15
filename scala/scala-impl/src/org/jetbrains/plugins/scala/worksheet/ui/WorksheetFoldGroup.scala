@@ -35,7 +35,7 @@ final class WorksheetFoldGroup(
 
   def foldedLinesCount: Int = _regions.map(_.spaces).sum
 
-  def expandedRegionsIndexes: Seq[Int] = _regions.zipWithIndex.filter(_._1.expanded).map(_._2)
+  def expandedRegionsIndexes: collection.Seq[Int] = _regions.zipWithIndex.filter(_._1.expanded).map(_._2)
 
   def left2rightOffset(left: Int): Int = {
     val key: Int = unfolded floorKey left
@@ -81,7 +81,7 @@ final class WorksheetFoldGroup(
     splitter.foreach(_.clear())
   }
 
-  private def addParsedRegions(regions: Seq[ParsedRegion]): Unit = {
+  private def addParsedRegions(regions: collection.Seq[ParsedRegion]): Unit = {
     val folding = viewerEditor.getFoldingModel.asInstanceOf[FoldingModelEx]
     folding.runBatchFoldingOperation { () =>
       regions.foreach(addParsedRegion(folding, _))
@@ -229,9 +229,9 @@ object WorksheetFoldGroup {
    * @return Seq(input line index -> output line index)
    *         NOTE: the mapping is returned starting from the first element which output was folded
    */
-  private def extractMappings(parsedRegions: Seq[ParsedRegion],
+  private def extractMappings(parsedRegions: collection.Seq[ParsedRegion],
                               originalDocument: Document,
-                              viewerDocument: Document): Seq[(Int, Int)] = {
+                              viewerDocument: Document): collection.Seq[(Int, Int)] = {
     if (parsedRegions.isEmpty || viewerDocument.getLineCount == 0) return Seq()
 
     val result = ArrayBuffer[(Int, Int)]()
@@ -299,7 +299,7 @@ object WorksheetFoldGroup {
     group
   }
   
-  def computeMappings(viewerEditor: Editor, originalEditor: Editor, file: PsiFile): Seq[(Int, Int)] = {
+  def computeMappings(viewerEditor: Editor, originalEditor: Editor, file: PsiFile): collection.Seq[(Int, Int)] = {
     val parsedRegions = extractRegions(file).getOrElse(Seq())
     val mappings = extractMappings(parsedRegions, originalEditor.getDocument, viewerEditor.getDocument)
     mappings.headOption match {
@@ -308,7 +308,7 @@ object WorksheetFoldGroup {
     }
   }
 
-  private def extractRegions(file: PsiFile): Option[Seq[ParsedRegion]] = {
+  private def extractRegions(file: PsiFile): Option[collection.Seq[ParsedRegion]] = {
     val regionsSerialized = FileAttributeUtilCache.readAttribute(WORKSHEET_PERSISTENT_FOLD_KEY, file).filter(_.nonEmpty)
     regionsSerialized.map(deserializeFoldRegions)
   }
@@ -325,7 +325,7 @@ object WorksheetFoldGroup {
                             spaces: Int,
                             expanded: Boolean)
 
-    def serializeFoldRegions(regions: Seq[FoldRegionInfo]): String = {
+    def serializeFoldRegions(regions: Iterable[FoldRegionInfo]): String = {
       val regionsSerialized = regions.map {
         case FoldRegionInfo(region, leftEndOffset, leftContentLines, spaces, expanded) =>
           val fields = Seq(region.getStartOffset, region.getEndOffset, expanded, leftEndOffset, spaces, leftContentLines)
@@ -334,7 +334,7 @@ object WorksheetFoldGroup {
       regionsSerialized.mkString(RegionsSeparator.toString)
     }
 
-    def deserializeFoldRegions(text: String): Seq[ParsedRegion] = {
+    def deserializeFoldRegions(text: String): collection.Seq[ParsedRegion] = {
       val regionsDumps  = text.split(RegionsSeparator)
       val regionsFields = regionsDumps.map(_.split(FieldSeparator))
       regionsFields.collect {

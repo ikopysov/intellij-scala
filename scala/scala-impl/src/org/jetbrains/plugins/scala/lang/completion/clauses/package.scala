@@ -64,20 +64,22 @@ package object clauses {
       })
 
   private[clauses] def adjustTypesOnClauses(addImports: Boolean,
-                                            pairs: (ScCaseClause, PatternComponents)*): Unit =
-    adjustTypes(addImports, pairs: _*) {
+                                            pairs: Iterable[(ScCaseClause, PatternComponents)]): Unit =
+    adjustTypes(addImports, pairs) {
       case ScCaseClause(Some(pattern@ScTypedPattern(typeElement)), _, _) => pattern -> typeElement
     }
 
   private[clauses] def adjustTypes[E <: ScalaPsiElement](addImports: Boolean,
-                                                         pairs: (E, PatternComponents)*)
+                                                         pairs: Iterable[(E, PatternComponents)])
                                                         (collector: PartialFunction[E, (ScPattern, ScTypeElement)]): Unit = {
     val findTypeElement = collector.lift
+    val elements = for {
+      (element, _) <- pairs
+      (_, typeElement) <- findTypeElement(element)
+    } yield typeElement
+
     adjustFor(
-      for {
-        (element, _) <- pairs
-        (_, typeElement) <- findTypeElement(element)
-      } yield typeElement,
+      elements.toSeq,
       addImports = addImports,
       useTypeAliases = false
     )

@@ -95,6 +95,6 @@ object MethodSeq {
       }
     }
     extractMethods(expr)
-    if (result.nonEmpty) Some(result) else None
+    if (result.nonEmpty) Some(result.toSeq) else None
   }
 }

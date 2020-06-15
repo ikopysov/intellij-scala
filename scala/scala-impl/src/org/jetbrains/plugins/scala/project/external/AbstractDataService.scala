@@ -93,7 +93,7 @@ trait Importer[E] {
 
   // TODO "set" is for setters, but the method modifies the IDEA's model
   protected def setScalaSdk(library: Library,
-                  compilerClasspath: Seq[File])
+                  compilerClasspath: collection.Seq[File])
                  (maybeVersion: Option[String] = library.compilerVersion): Unit =
     Importer.setScalaSdk(modelsProvider, library, ScalaLibraryProperties(maybeVersion, compilerClasspath))
 }

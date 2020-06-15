@@ -63,7 +63,7 @@ class ScArgumentExprListImpl(node: ASTNode) extends ScalaPsiElementImpl(node) wi
     }
   }
 
-  override def matchedParameters: Seq[(ScExpression, Parameter)] = {
+  override def matchedParameters: collection.Seq[(ScExpression, Parameter)] = {
     getContext match {
       case call: ScMethodCall => call.matchedParameters
       case constrInvocation: ScConstructorInvocation =>

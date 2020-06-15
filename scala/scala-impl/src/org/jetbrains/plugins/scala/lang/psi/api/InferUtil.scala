@@ -484,9 +484,9 @@ object InferUtil {
 
   def localTypeInferenceWithApplicabilityExt(
     retType:                  ScType,
-    params:                   Seq[Parameter],
-    exprs:                    Seq[Expression],
-    typeParams:               Seq[TypeParameter],
+    params:                   collection.Seq[Parameter],
+    exprs:                    collection.Seq[Expression],
+    typeParams:               collection.Seq[TypeParameter],
     shouldUndefineParameters: Boolean = true,
     canThrowSCE:              Boolean = false,
     filterTypeParams:         Boolean = true,

@@ -67,7 +67,7 @@ class ConstructorParamsInConstructorPatternSearcher extends CustomUsageSearcher 
   }
 
   private class SubPatternWithIndexBindings(i: Int) {
-    def unapply(ref: PsiReference): Option[Seq[ScBindingPattern]] = {
+    def unapply(ref: PsiReference): Option[collection.Seq[ScBindingPattern]] = {
       inReadAction {
         ref.getElement.getParent match {
           case consPattern: ScConstructorPattern => consPattern.args.patterns.lift(i).map(_.bindings)

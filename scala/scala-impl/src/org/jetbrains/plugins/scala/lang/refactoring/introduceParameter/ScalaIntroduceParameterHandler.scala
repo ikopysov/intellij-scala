@@ -43,7 +43,7 @@ import scala.collection.mutable.ArrayBuffer
  */
 class ScalaIntroduceParameterHandler extends ScalaRefactoringActionHandler with DialogConflictsReporter {
 
-  private var occurrenceHighlighters = Seq.empty[RangeHighlighter]
+  private var occurrenceHighlighters: Iterable[RangeHighlighter] = Seq.empty[RangeHighlighter]
 
 
   override def invoke(file: PsiFile)
@@ -56,7 +56,7 @@ class ScalaIntroduceParameterHandler extends ScalaRefactoringActionHandler with 
     }
   }
 
-  def functionalArg(elems: Seq[PsiElement], input: Iterable[VariableInfo], method: ScMethodLike): (ScExpression, ScType) = {
+  def functionalArg(elems: collection.Seq[PsiElement], input: Iterable[VariableInfo], method: ScMethodLike): (ScExpression, ScType) = {
     import method.projectContext
 
     val namesAndTypes = input.map { v =>
@@ -120,7 +120,7 @@ class ScalaIntroduceParameterHandler extends ScalaRefactoringActionHandler with 
   private type ExprWithTypes = Option[(ScExpression, Array[ScType])]
 
   def selectedElementsInFile(file: PsiFile)
-                            (implicit project: Project, editor: Editor): Option[(ExprWithTypes, Seq[PsiElement])] = {
+                            (implicit project: Project, editor: Editor): Option[(ExprWithTypes, collection.Seq[PsiElement])] = {
     try {
       if (!editor.getSelectionModel.hasSelection) return None
 
@@ -146,7 +146,7 @@ class ScalaIntroduceParameterHandler extends ScalaRefactoringActionHandler with 
   }
 
 
-  def collectData(exprWithTypes: ExprWithTypes, elems: Seq[PsiElement], methodLike: ScMethodLike, editor: Editor): Option[ScalaIntroduceParameterData] = {
+  def collectData(exprWithTypes: ExprWithTypes, elems: collection.Seq[PsiElement], methodLike: ScMethodLike, editor: Editor): Option[ScalaIntroduceParameterData] = {
     implicit val project: Project = methodLike.getProject
 
     val info = ReachingDefinitionsCollector.collectVariableInfo(elems, methodLike)
@@ -204,7 +204,7 @@ class ScalaIntroduceParameterHandler extends ScalaRefactoringActionHandler with 
     Some(data)
   }
 
-  private def getEnclosingMethods(expr: PsiElement): Seq[ScMethodLike] = {
+  private def getEnclosingMethods(expr: PsiElement): collection.Seq[ScMethodLike] = {
     var enclosingMethods = new ArrayBuffer[ScMethodLike]
     var elem: PsiElement = expr
     while (elem != null) {
@@ -269,7 +269,7 @@ class ScalaIntroduceParameterHandler extends ScalaRefactoringActionHandler with 
   private def afterMethodChoosing(element: PsiElement)
                                  (action: ScMethodLike => Unit)
                                  (implicit project: Project = element.getProject, editor: Editor): Unit = {
-    val validEnclosingMethods: Seq[ScMethodLike] = getEnclosingMethods(element)
+    val validEnclosingMethods: collection.Seq[ScMethodLike] = getEnclosingMethods(element)
     if (validEnclosingMethods.size > 1 && !ApplicationManager.getApplication.isUnitTestMode) {
       showChooser[ScMethodLike](editor, validEnclosingMethods.toArray, action,
         ScalaBundle.message("choose.function.for.refactoring", REFACTORING_NAME), getTextForElement, toHighlight)
@@ -286,7 +286,7 @@ class ScalaIntroduceParameterHandler extends ScalaRefactoringActionHandler with 
       !method.getManager.isInProject(method)
   }
 
-  private def haveReturnStmts(elems: Seq[PsiElement]): Boolean = {
+  private def haveReturnStmts(elems: Iterable[PsiElement]): Boolean = {
     for {
       elem <- elems
       ret@(r: ScReturn) <- elem.depthFirst()

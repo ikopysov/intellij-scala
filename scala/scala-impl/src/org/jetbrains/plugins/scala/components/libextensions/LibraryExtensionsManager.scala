@@ -212,7 +212,7 @@ final class LibraryExtensionsManager(project: Project) {
     saveCachedExtensions()
   }
 
-  def getAvailableLibraries: Seq[ExtensionJarData] = myLoadedLibraries
+  def getAvailableLibraries: collection.Seq[ExtensionJarData] = myLoadedLibraries
 
   def addExtension(file: File): Unit = {
     processResolvedExtension(file)

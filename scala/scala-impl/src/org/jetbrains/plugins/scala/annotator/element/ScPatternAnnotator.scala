@@ -170,7 +170,7 @@ object ScPatternAnnotator extends ElementAnnotator[ScPattern] {
       }
   }
 
-  private def freeTypeParamsOfTerms(tp: ScType): Seq[ScType] = {
+  private def freeTypeParamsOfTerms(tp: ScType): collection.Seq[ScType] = {
     val buffer = ArrayBuffer[ScType]()
     tp.visitRecursively {
       case tp: TypeParameterType => buffer += tp

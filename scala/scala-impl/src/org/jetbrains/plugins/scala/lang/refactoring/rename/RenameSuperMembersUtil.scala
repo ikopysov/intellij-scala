@@ -78,7 +78,7 @@ object RenameSuperMembersUtil {
 
   /* @param supermembers contains only maximal supermembers
    */
-  private def afterChoosingSuperMember(superMembers: Seq[PsiNamedElement], element: PsiNamedElement, editor: Editor)
+  private def afterChoosingSuperMember(superMembers: collection.Seq[PsiNamedElement], element: PsiNamedElement, editor: Editor)
                                       (action: PsiNamedElement => Unit): Unit = {
     if (superMembers.isEmpty) {
       action(element)
@@ -88,8 +88,11 @@ object RenameSuperMembersUtil {
     val classes = allElements.flatMap(_.parentOfType(classOf[PsiClass], strict = false))
 
     val oneSuperClass = superMembers.size == 1
-    val additional = if (oneSuperClass) Nil else Seq((renameAllMarker(element), null)) //option for rename all
-    val classesToNamed = additional ++: Map(classes.zip(allElements): _*)
+    val additional = if (oneSuperClass) Nil else List((renameAllMarker(element), null)) //option for rename all
+    val classesToNamed = collection.Map.newBuilder
+      .addAll(classes.zip(allElements))
+      .addAll(additional)
+      .result()
     val selection = classesToNamed.keys.head
 
     val processor = new PsiElementProcessor[PsiClass] {
@@ -157,7 +160,7 @@ object RenameSuperMembersUtil {
   }
 
   @NotNull
-  def allSuperMembers(named: ScNamedElement, withSelfType: Boolean): Seq[PsiNamedElement] = {
+  def allSuperMembers(named: ScNamedElement, withSelfType: Boolean): collection.Seq[PsiNamedElement] = {
     val member = ScalaPsiUtil.nameContext(named) match {
       case m: ScMember => m
       case _ => return Seq.empty
@@ -175,7 +178,7 @@ object RenameSuperMembersUtil {
   }
 
   @NotNull
-  def allSuperTypes(named: ScNamedElement, withSelfType: Boolean): Seq[PsiNamedElement] = {
+  def allSuperTypes(named: ScNamedElement, withSelfType: Boolean): collection.Seq[PsiNamedElement] = {
     val typeAlias = ScalaPsiUtil.nameContext(named) match {
       case t: ScTypeAlias => t
       case _ => return Seq()
@@ -193,7 +196,7 @@ object RenameSuperMembersUtil {
   }
 
   @NotNull
-  private def findMaxSuperMembers(elements: Seq[PsiNamedElement]): Seq[PsiNamedElement] = {
+  private def findMaxSuperMembers(elements: collection.Seq[PsiNamedElement]): collection.Seq[PsiNamedElement] = {
     def elementWithContainingClass(elem: PsiNamedElement) = {
       ScalaPsiUtil.nameContext(elem) match {
         case sm: ScMember => Option(sm.containingClass, elem)

@@ -37,6 +37,7 @@ class ScalaSdkProvider(implicit indicator: ProgressIndicator, contextDirectory: 
 
     val componentsByVersion = components.groupBy(_.version)
     componentsByVersion
+      .view
       .mapValues(ScalaSdkDescriptor.buildFromComponents)
       .toSeq
       .collect { case (Some(_), Right(descriptor)) => detector.buildSdkChoice(descriptor) }

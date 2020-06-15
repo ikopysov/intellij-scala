@@ -15,7 +15,7 @@ object MapValues extends SimplificationType {
   override def hint: String = ScalaInspectionBundle.message("replace.with.values")
 
   override def getSimplification(expr: ScExpression): Option[Simplification] = expr match {
-    case qual`.map`(`_._2`())`.toIterator`() if isMap(qual) =>
+    case qual`.map`(`_._2`())`.toIterator` Seq() if isMap(qual) =>
       val iteratorHint = ScalaInspectionBundle.message("replace.with.valuesIterator")
       Some(replace(expr).withText(invocationText(qual, "valuesIterator")).highlightFrom(qual).withHint(iteratorHint))
     case qual`.map`(`_._2`()) if isMap(qual) =>

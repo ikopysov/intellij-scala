@@ -73,7 +73,7 @@ private class ImplicitParameterProblemNode(value: ScalaResolveResult)
 
   override def getChildrenImpl: util.Collection[AbstractTreeNode[_]] = {
     val arguments = ImplicitCollector.probableArgumentsFor(value)
-    val nodes: Seq[AbstractTreeNode[_]] = arguments.map {
+    val nodes: collection.Seq[AbstractTreeNode[_]] = arguments.map {
       case (resolveResult, fullInfo) => new ImplicitArgumentWithReason(resolveResult, fullInfo)
     }
     if (nodes.nonEmpty) nodes.asJavaCollection

@@ -36,21 +36,23 @@ class ConstructorResolveProcessor(constr: PsiElement, refName: String, args: Lis
       def constructorIsAccessible(constructor: PsiMethod) =
         isAccessible(constructor, ref)
 
-      def constructors(clazz: PsiClass, substitutor: ScSubstitutor) = clazz.constructors filter {
-        case constructor if accessibility =>
-          constructorIsAccessible(constructor)
-        case _ => true
-      } map {
-        (_, substitutor, Some(namedElement))
-      }
+      def constructors(clazz: PsiClass, substitutor: ScSubstitutor) =
+        clazz.constructors.filter {
+          case constructor if accessibility =>
+            constructorIsAccessible(constructor)
+          case _ => true
+        }.map {
+          (_, substitutor, Some(namedElement))
+        }
 
-      def orDefault(tuples: Seq[(PsiNamedElement, ScSubstitutor, Option[PsiNamedElement])] = Seq.empty) =
+      def orDefault(tuples: collection.Seq[(PsiNamedElement, ScSubstitutor, Option[PsiNamedElement])] = Seq.empty)
+      : collection.Seq[(PsiNamedElement, ScSubstitutor, Option[PsiNamedElement])] =
         tuples match {
           case Seq() => Seq((namedElement, defaultSubstitutor, None))
         case seq => seq
       }
 
-      val tuples: Seq[(PsiNamedElement, ScSubstitutor, Option[PsiNamedElement])] = namedElement match {
+      val tuples: collection.Seq[(PsiNamedElement, ScSubstitutor, Option[PsiNamedElement])] = namedElement match {
         case clazz: PsiClass =>
           orDefault(constructors(clazz, defaultSubstitutor))
         case _: ScTypeAliasDeclaration =>

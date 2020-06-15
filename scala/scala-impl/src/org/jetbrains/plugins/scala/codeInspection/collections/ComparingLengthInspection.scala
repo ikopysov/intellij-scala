@@ -21,12 +21,12 @@ object ComparingLengthInspection {
     override def hint: String = ComparingLengthInspection.hint
 
     override def getSimplification(e: ScExpression): Option[Simplification] = Some(e).collect {
-      case q `.sizeOrLength` () `>` n => (q, ">", n)
-      case q `.sizeOrLength` () `>=` n => (q, ">=", n)
-      case q `.sizeOrLength` () `==` n => (q, "==", n)
-      case q `.sizeOrLength` () `!=` n => (q, "!=", n)
-      case q `.sizeOrLength` () `<` n => (q, "<", n)
-      case q `.sizeOrLength` () `<=` n => (q, "<=", n)
+      case q `.sizeOrLength` Seq() `>` n => (q, ">", n)
+      case q `.sizeOrLength` Seq() `>=` n => (q, ">=", n)
+      case q `.sizeOrLength` Seq() `==` n => (q, "==", n)
+      case q `.sizeOrLength` Seq() `!=` n => (q, "!=", n)
+      case q `.sizeOrLength` Seq() `<` n => (q, "<", n)
+      case q `.sizeOrLength` Seq() `<=` n => (q, "<=", n)
     } filter { case (q, _, n) =>
       isNonIndexedSeq(q) && !isZero(n)
     } map { case (q, op, n) =>

@@ -421,7 +421,7 @@ class ScalaFunctionParameterInfoHandler extends ScalaParameterInfoHandler[PsiEle
     def invocationCount: Int
     def callGeneric: Option[ScGenericCall] = None
     def callReference: Option[ScReferenceExpression]
-    def arguments: Seq[ScExpression]
+    def arguments: collection.Seq[ScExpression]
   }
 
   object Invocation {

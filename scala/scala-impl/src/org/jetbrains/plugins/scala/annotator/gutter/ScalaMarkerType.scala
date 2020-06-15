@@ -28,8 +28,11 @@ import org.jetbrains.plugins.scala.util.SAMUtil
  * Date: 09.11.2008
  */
 object ScalaMarkerType {
-  private[this] def extractClassName(sigs: Seq[TermSignature]): Option[String] =
-    sigs.headOption.map(_.namedElement).collect { case ContainingClass(aClass) => aClass.qualifiedName }
+  private[this] def extractClassName(sigs: collection.Seq[TermSignature]): Option[String] =
+    sigs
+      .headOption
+      .map(_.namedElement)
+      .collect { case ContainingClass(aClass) => aClass.qualifiedName }
 
   private[this] def sigToNavigatableElement(s: TermSignature): Option[NavigatablePsiElement] = s.namedElement match {
     case ne: NavigatablePsiElement => Option(ne)
@@ -61,9 +64,9 @@ object ScalaMarkerType {
     navigateToSuperMember(event, superMethods, title, findUsagesTitle)
   }
 
-  def findOverrides(member: ScMember, deep: Boolean): Seq[PsiNamedElement] = {
+  def findOverrides(member: ScMember, deep: Boolean): collection.Seq[PsiNamedElement] = {
 
-    val namedElems: Seq[ScNamedElement] = member match {
+    val namedElems = member match {
       case d: ScDeclaredElementsHolder => d.declaredElements.filterBy[ScNamedElement]
       case param: ScClassParameter => Seq(param)
       case ta: ScTypeAlias => Seq(ta)

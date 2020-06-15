@@ -35,11 +35,11 @@ trait ScExtendsBlock extends ScalaPsiElement {
 
   def earlyDefinitions: Option[ScEarlyDefinitions]
 
-  def typeDefinitions : Seq[ScTypeDefinition]
+  def typeDefinitions : collection.Seq[ScTypeDefinition]
 
   def superTypes : List[ScType]
 
-  def supers : Seq[PsiClass]
+  def supers : collection.Seq[PsiClass]
 
   def isAnonymousClass: Boolean
 

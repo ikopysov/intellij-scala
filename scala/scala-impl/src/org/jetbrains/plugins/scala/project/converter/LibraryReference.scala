@@ -105,7 +105,7 @@ private case class LibraryReference(level: Level, name: String) {
 }
 
 private object LibraryReference {
-  def findAllIn(module: ModuleSettings): Seq[LibraryReference] = {
+  def findAllIn(module: ModuleSettings): collection.Seq[LibraryReference] = {
     val libraryEntries = module.getOrderEntries.asScala.filter(_.getAttributeValue("type") == "library")
     libraryEntries.map(LibraryReference(_))
   }
