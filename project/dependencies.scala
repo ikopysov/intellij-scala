@@ -91,7 +91,7 @@ object Dependencies {
   val junitInterface: ModuleID = "com.novocode" % "junit-interface" % "0.11" % "test"
   val ivy2: ModuleID = "org.apache.ivy" % "ivy" % "2.4.0"
 
-//  val scalastyle: ModuleID = "org.scalastyle" %% "scalastyle" % "1.0.0"
+  val scalastyle: ModuleID = "com.beautiful-scala" %% "scalastyle" % "1.1.0"
   val scalariform: ModuleID = "org.scalariform" %% "scalariform" % "0.2.10"
   val scalafmt: Seq[ModuleID] = Seq(
     "com.geirsson" %% "scalafmt-core" % "1.5.1",
@@ -121,6 +121,13 @@ object Dependencies {
   val compilerBridgeSources_2_11 = "org.scala-sbt" % "compiler-bridge_2.11" % zincVersion classifier "sources"
   val compilerBridgeSources_2_13 = "org.scala-sbt" % "compiler-bridge_2.13" % zincVersion classifier "sources"
   val dottySbtBridge = "ch.epfl.lamp" % "dotty-sbt-bridge" % Scala.latest_dotty
+
+  // "provided" danger: we statically depend on a single version, but need to support all the version
+  // some part of our code is now statically dependent on lib classes, another part uses reflections for other versions
+  val scalaTest = "org.scalatest" %% "scalatest" % "3.1.2" % "provided"
+  val utest = "com.lihaoyi" %% "utest" % "0.7.4" % "provided"
+  val specs2_2x = "org.specs2" %% "specs2-core" % "2.4.17" % "provided" excludeAll ExclusionRule(organization = "org.ow2.asm")
+  val specs2_4x = "org.specs2" %% "specs2-core" % "4.8.3" % "provided" excludeAll ExclusionRule(organization = "org.ow2.asm")
 
   /** The filtering function returns true for jars to be removed.
    * It's purpose is to exclude platform jars that may conflict with plugin dependencies. */
@@ -154,7 +161,7 @@ object DependencyGroups {
     scalatestFindersPatched,
     jamm,
     ivy2,
-//    scalastyle,
+    scalastyle,
     scalariform,
     compilerIndicesProtocol
   )
@@ -178,13 +185,10 @@ object DependencyGroups {
   )
 
   val runners: Seq[ModuleID] = Seq(
-    "org.scala-lang" % "scala-compiler" % scalaVersion,
-    // "provided" danger: we statically depend on a single version, but need to support all the version
-    // some part of our code is now statically dependent on lib classes, another part uses reflections for other versions
-    "org.scalatest" %% "scalatest" % "3.1.2" % "provided",
-    "com.lihaoyi" %% "utest" % "0.7.4" % "provided",
-    "org.specs2" %% "specs2-core" % "4.8.3" % "provided" excludeAll ExclusionRule(organization = "org.ow2.asm")
-    //  val specs2: ModuleID = "org.specs2" %% "specs2-core" % "3.9.1" % "provided" excludeAll ExclusionRule(organization = "org.ow2.asm")
+    scalaCompiler,
+    scalaTest,
+    utest,
+    specs2_4x
   )
 
   val runtime: Seq[ModuleID] = Seq(
